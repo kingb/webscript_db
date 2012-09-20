@@ -15,6 +15,9 @@ class Script(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     modification_date = models.DateTimeField(auto_now=True, auto_now_add=True)
 
+    def __unicode__(self):
+        return u'{} - {}'.format(self.name, self.creation_date)
+
 
 class Event(models.Model):
     event_type = models.CharField(max_length=128,
@@ -36,6 +39,9 @@ class Event(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     modification_date = models.DateTimeField(auto_now=True, auto_now_add=True)
 
+    def __unicode__(self):
+        return u'{}: {} ({})'.format(self.execution_order, self.event_type, self.script.name)
+
 
 class Parameter(models.Model):
     name = models.CharField(max_length=64)
@@ -51,6 +57,12 @@ class Parameter(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     modification_date = models.DateTimeField(auto_now=True, auto_now_add=True)
 
+    def __unicode__(self):
+        if len(self.value) > 32:
+            return u'Param: {} - {}... ({}) --> Event: {}'.format(self.name, self.value[:32], self.data_type,
+                                                                  self.event)
+        return u'Param: {} - {} ({}) --> Event: {}'.format(self.name, self.value, self.data_type, self.event)
+
 
 #FIXME: Need to define what the replay will store and where it should store it?
 #  In duplicated Events/Parameters, or similar objects with more details?
@@ -60,3 +72,6 @@ class Replay(models.Model):
 
     creation_date = models.DateTimeField(auto_now_add=True)
     modification_date = models.DateTimeField(auto_now=True, auto_now_add=True)
+
+    def __unicode__(self):
+        return u'{} - {}'.format(self.script.name, self.creation_date)
