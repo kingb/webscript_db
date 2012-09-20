@@ -84,7 +84,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '6z95atd12c%s5%1zy0yz^fcj5r*pzh7113ns$e^^qxvemir5ys'
+SECRET_KEY = '<replace with real secret key>'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -121,6 +121,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'webscript_backend',
+    'tastypie',
 )
 
 # A sample logging configuration. The only tangible logging
