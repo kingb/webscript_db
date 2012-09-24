@@ -15,3 +15,9 @@ webscript_backend django app.
   cd webscriptdb/
   python manage.py syncdb    # First time only to create DB
   python manage.py runserver 
+  
+Useful starting URLs:
+ * http://localhost:8000/admin/
+ * http://localhost:8000/api/v1/
+   * http://localhost:8000/api/v1/(script|event|parameter|replay)/
+     * * http://localhost:8000/api/v1/(script|event|parameter|replay)/1/
