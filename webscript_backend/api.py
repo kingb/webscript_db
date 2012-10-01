@@ -22,6 +22,8 @@ class ParameterResource(ModelResource):
         queryset = models.Parameter.objects.all()
         resource_name = 'parameter'
 
+        authorization = Authorization()
+
 
 class EventResource(ModelResource):
     script = fields.ToOneField('webscript_backend.api.ScriptResource', 'script')
@@ -30,6 +32,8 @@ class EventResource(ModelResource):
     class Meta:
         queryset = models.Event.objects.all()
         resource_name = 'event'
+
+        authorization = Authorization()
 
 
 class ScriptResource(ModelResource):
