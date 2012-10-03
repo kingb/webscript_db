@@ -16,26 +16,34 @@ class UserResource(ModelResource):
 
 
 class ParameterResource(ModelResource):
-    event = fields.ToOneField('webscript_backend.api.EventResource', 'event')
+    event = fields.ToOneField('webscript_backend.api.EventResource', 'event',\
+        related_name='parameter')
 
     class Meta:
         queryset = models.Parameter.objects.all()
         resource_name = 'parameter'
 
+        authorization = Authorization()
+
 
 class EventResource(ModelResource):
-    script = fields.ToOneField('webscript_backend.api.ScriptResource', 'script')
-    parameters = fields.ToManyField('webscript_backend.api.ParameterResource', 'parameter_set')
+    script = fields.ToOneField('webscript_backend.api.ScriptResource',\
+        'script', related_name='event')
+    parameters = fields.ToManyField('webscript_backend.api.ParameterResource',\
+        'parameter_set', related_name='event', full=True)
 
     class Meta:
         queryset = models.Event.objects.all()
         resource_name = 'event'
 
+        authorization = Authorization()
+
 
 class ScriptResource(ModelResource):
     user = fields.ForeignKey(UserResource, 'user')
 
-    events = fields.ToManyField(EventResource, 'event_set')
+    events = fields.ToManyField(EventResource, 'event_set',\
+        related_name='script', full=True)
 
     class Meta:
         queryset = models.Script.objects.all()
