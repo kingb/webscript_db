@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
+from tastypie.models import create_api_key
 
-# Create your models here.
+models.signals.post_save.connect(create_api_key, sender=User)
+
 
 class Script(models.Model):
     name = models.CharField(max_length=128)
@@ -52,7 +54,8 @@ class Parameter(models.Model):
                                                          ('Bool', 'Bool'),
                                                          ('String', 'String')])
 
-    event = models.ForeignKey('Event')
+    event = models.ForeignKey('Event', blank=True, null=True, default=None)
+    replay_event = models.ForeignKey('ReplayEvent', blank=True, null=True, default=None)
 
     creation_date = models.DateTimeField(auto_now_add=True)
     modification_date = models.DateTimeField(auto_now=True, auto_now_add=True)
@@ -75,3 +78,32 @@ class Replay(models.Model):
 
     def __unicode__(self):
         return u'{} - {}'.format(self.script.name, self.creation_date)
+
+
+class ReplayEvent(models.Model):
+    replay = models.ForeignKey('Replay',
+                               help_text="The replay 'session' that this replay event belongs to.")
+    event = models.ForeignKey('Event',
+                              help_text="The event this replay was based on.")
+
+    event_type = models.CharField(max_length=128,
+                                  help_text="The type of event to be replayed.")
+    dom_pre_event_state = models.TextField(help_text="State of DOM prior to Event firing",
+                                     blank=True, null=True)
+    dom_post_event_state = models.TextField(help_text="State of DOM after Event finished",
+                                     blank=True, null=True)
+    version = models.CharField(max_length=32,
+                               help_text="Event Format version for Event. " \
+                                     "Intended to allow backwards incompatible changes.",
+                               default="1.0")
+
+    execution_order = models.FloatField(help_text="Floating point number of execution." \
+                                "This allows for reconstructing the proper order of events.")
+
+    creation_date = models.DateTimeField(auto_now_add=True)
+    modification_date = models.DateTimeField(auto_now=True, auto_now_add=True)
+
+    def __unicode__(self):
+        return u'{}: {} ({})'.format(self.execution_order, self.event_type, self.script.name)
+
+
