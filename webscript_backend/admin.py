@@ -19,7 +19,7 @@ class EventAdmin(admin.ModelAdmin):
                      )
 
 
-    ordering = ('script', 'execution_order',)
+    ordering = ('script', '-execution_order',)
 
 class ParameterAdmin(admin.ModelAdmin):
     pass
