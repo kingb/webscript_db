@@ -44,6 +44,16 @@ class Event(models.Model):
     def __unicode__(self):
         return u'{}: {} ({})'.format(self.execution_order, self.event_type, self.script.name)
 
+    def display_parameters(self):
+        """
+        Summarize parameters for this event.
+        """
+        l = []
+        for param in self.parameter_set.all():
+            l.append(u"{}={}".format(param.name, param.value))
+        return "; ".join(l)
+    display_parameters.short_description = "Parameters"
+
 
 class Parameter(models.Model):
     name = models.CharField(max_length=64)

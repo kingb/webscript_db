@@ -5,7 +5,21 @@ class ScriptAdmin(admin.ModelAdmin):
     pass
 
 class EventAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('execution_order', 'event_type', 'display_parameters', 'script',)
+    list_filter = ('script__name',
+                   'script__user__username',
+                   'event_type')
+
+    search_fields = ('event_type',
+                     'dom_pre_event_state',
+                     'dom_post_event_state',
+                     'script__name',
+                     'parameter__name',
+                     'parameter__value',
+                     )
+
+
+    ordering = ('execution_order',)
 
 class ParameterAdmin(admin.ModelAdmin):
     pass
