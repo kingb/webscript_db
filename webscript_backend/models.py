@@ -62,9 +62,11 @@ class Parameter(models.Model):
 
     def __unicode__(self):
         if len(self.value) > 32:
-            return u'Param: {} - {}... ({}) --> Event: {}'.format(self.name, self.value[:32], self.data_type,
-                                                                  self.event)
-        return u'Param: {} - {} ({}) --> Event: {}'.format(self.name, self.value, self.data_type, self.event)
+            return u'Param: {} - {}... ({}) --> Event: {}; ReplayEvent: {}'.format(self.name,
+                                                            self.value[:32], self.data_type,
+                                                            self.event, self.replay_event)
+        return u'Param: {} - {} ({}) --> Event: {}; ReplayEvent: {}'.format(self.name,
+                            self.value, self.data_type, self.event, self.replay_event)
 
 
 #FIXME: Need to define what the replay will store and where it should store it?
@@ -104,6 +106,6 @@ class ReplayEvent(models.Model):
     modification_date = models.DateTimeField(auto_now=True, auto_now_add=True)
 
     def __unicode__(self):
-        return u'{}: {} ({})'.format(self.execution_order, self.event_type, self.script.name)
+        return u'{}: {} ({})'.format(self.execution_order, self.event_type, self.replay)
 
 

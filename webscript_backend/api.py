@@ -18,6 +18,8 @@ class UserResource(ModelResource):
 class ParameterResource(ModelResource):
     event = fields.ToOneField('webscript_backend.api.EventResource', 'event',
         related_name='parameter')
+    replay_event = fields.ToOneField('webscript_backend.api.ReplayEventResource',
+                                     'replay_event', related_name='parameter')
 
     class Meta:
         queryset = models.Parameter.objects.all()
@@ -31,6 +33,8 @@ class EventResource(ModelResource):
         'script', related_name='event')
     parameters = fields.ToManyField('webscript_backend.api.ParameterResource',
         'parameter_set', related_name='event', full=True)
+    replay_events = fields.ToManyField('webscript_backend.api.ReplayEventResource',
+        'replay_event_set', related_name='event', full=True)
 
     class Meta:
         queryset = models.Event.objects.all()
@@ -68,6 +72,8 @@ class ReplayResource(ModelResource):
 class ReplayEventResource(ModelResource):
     replay = fields.ToOneField('webscript_backend.api.ReplayResource',
                                'replay', related_name='replay_event')
+    event = fields.ToOneField('webscript_backend.api.EventResource',
+                              'event', related_name='replay_event')
     parameters = fields.ToManyField('webscript_backend.api.ParameterResource',
                         'parameter_set', related_name='replay_event', full=True)
 
