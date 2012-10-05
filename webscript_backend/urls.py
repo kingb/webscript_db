@@ -7,6 +7,8 @@ v1_api.register(api.UserResource())
 v1_api.register(api.ScriptResource())
 v1_api.register(api.EventResource())
 v1_api.register(api.ParameterResource())
+v1_api.register(api.ReplayResource())
+v1_api.register(api.ReplayEventResource())
 
 
 urlpatterns = patterns('webscript_backend',
