@@ -50,7 +50,10 @@ class Event(models.Model):
         """
         l = []
         for param in self.parameter_set.all():
-            l.append(u"{}={}".format(param.name, param.value))
+            if len(param.value) > 16:
+                l.append(u"{}={}...".format(param.name, param.value[:16]))
+            else:
+                l.append(u"{}={}".format(param.name, param.value))
         return "; ".join(l)
     display_parameters.short_description = "Parameters"
 
