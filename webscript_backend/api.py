@@ -1,4 +1,4 @@
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelResource, ALL
 from tastypie.authentication import BasicAuthentication, ApiKeyAuthentication
 from tastypie.authorization import Authorization, DjangoAuthorization
 from tastypie import fields
@@ -52,6 +52,9 @@ class ScriptResource(ModelResource):
     class Meta:
         queryset = models.Script.objects.all()
         resource_name = 'script'
+        filtering = {
+          'name': ALL,
+        }
 
         authorization = Authorization()
         #authentication = ApiKeyAuthentication()
