@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
-from tastypie.models import create_api_key
+#from tastypie.models import create_api_key
 
-models.signals.post_save.connect(create_api_key, sender=User)
+# See the following before using create_api_key:
+#  http://django-tastypie.readthedocs.org/en/latest/debugging.html#why-is-my-syncdb-with-superuser-failing-with-a-databaseerror
+#models.signals.post_save.connect(create_api_key, sender=User)
 
 
 class Script(models.Model):
@@ -50,7 +52,10 @@ class Event(models.Model):
         """
         l = []
         for param in self.parameter_set.all():
-            l.append(u"{}={}".format(param.name, param.value))
+            if len(param.value) > 16:
+                l.append(u"{}={}...".format(param.name, param.value[:16]))
+            else:
+                l.append(u"{}={}".format(param.name, param.value))
         return "; ".join(l)
     display_parameters.short_description = "Parameters"
 
