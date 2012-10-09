@@ -64,10 +64,10 @@ class Parameter(models.Model):
     name = models.CharField(max_length=64)
     value = models.TextField()
     #FIXME: We may not need to provide the datatype, but it may be useful. Need to decide.
-    data_type = models.CharField(max_length=32, choices=[('Int', 'Int'),
-                                                         ('Float', 'Float'),
-                                                         ('Bool', 'Bool'),
-                                                         ('String', 'String')])
+    data_type = models.CharField(max_length=32, choices=[('number', 'number'),
+                                                         ('object', 'object'),
+                                                         ('boolean', 'boolean'),
+                                                         ('string', 'string')])
 
     event = models.ForeignKey('Event', blank=True, null=True, default=None)
     replay_event = models.ForeignKey('ReplayEvent', blank=True, null=True, default=None)
