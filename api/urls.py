@@ -5,6 +5,7 @@ from api import handlers
 script_handler = Resource(handlers.ScriptHandler)
 event_handler = Resource(handlers.EventHandler)
 param_handler = Resource(handlers.ParameterHandler)
+user_handler = Resource(handlers.UserHandler)
 
 urlpatterns = patterns('',
    url(r'^script/(?P<script_id>[^/]+)/', script_handler),
@@ -14,4 +15,6 @@ urlpatterns = patterns('',
    url(r'^event/', event_handler),
    url(r'^event_parameters/(?P<event_id>[^/]+)/', param_handler),
    url(r'^parameter/', param_handler),
+   url(r'^user/(?P<username>[^/]+)/', user_handler),
+   url(r'^user/', user_handler),
 )

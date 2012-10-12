@@ -52,7 +52,7 @@ class Event(models.Model):
         Summarize parameters for this event.
         """
         l = []
-        for param in self.parameter_set.all():
+        for param in self.parameters.all():
             if len(param.value) > 16:
                 l.append(u"{}={}...".format(param.name, param.value[:16]))
             else:

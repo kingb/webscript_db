@@ -1,0 +1,24 @@
+{
+    "script_id": 2,
+    "events": [
+        {
+            "event_type": "dblclick",
+            "dom_pre_event_state": "<div>",
+            "execution_order": 1,
+            "dom_post_event_state": "<div>",
+            "version": "1.0",
+            "parameters": [
+                {
+                    "data_type": "number",
+                    "value": "42",
+                    "name": "meaning"
+                },
+                {
+                    "data_type": "number",
+                    "value": "bar",
+                    "name": "foo"
+                }
+            ]
+        }
+    ]
+}
