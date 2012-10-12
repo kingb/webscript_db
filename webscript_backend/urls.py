@@ -12,6 +12,6 @@ v1_api.register(api.ReplayEventResource())
 
 
 urlpatterns = patterns('webscript_backend',
-    url(r'^api/', include(v1_api.urls)),
+    url(r'^api_old/', include(v1_api.urls)),
 )
 
