@@ -1,10 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
-#from tastypie.models import create_api_key
+# from tastypie.models import create_api_key
 
 # See the following before using create_api_key:
 #  http://django-tastypie.readthedocs.org/en/latest/debugging.html#why-is-my-syncdb-with-superuser-failing-with-a-databaseerror
-#models.signals.post_save.connect(create_api_key, sender=User)
+# models.signals.post_save.connect(create_api_key, sender=User)
 
 
 class Script(models.Model):
@@ -36,6 +36,7 @@ class Event(models.Model):
                                default="1.0")
 
     script = models.ForeignKey('Script',
+                               related_name="events",
                                help_text="The script this event belongs to.")
     execution_order = models.FloatField(help_text="Floating point number of execution." \
                                 "This allows for reconstructing the proper order of events.")
@@ -63,13 +64,14 @@ class Event(models.Model):
 class Parameter(models.Model):
     name = models.CharField(max_length=64)
     value = models.TextField()
-    #FIXME: We may not need to provide the datatype, but it may be useful. Need to decide.
+    # FIXME: We may not need to provide the datatype, but it may be useful. Need to decide.
     data_type = models.CharField(max_length=32, choices=[('number', 'number'),
                                                          ('object', 'object'),
                                                          ('boolean', 'boolean'),
                                                          ('string', 'string')])
 
-    event = models.ForeignKey('Event', blank=True, null=True, default=None)
+    event = models.ForeignKey('Event', blank=True, null=True, default=None,
+                              related_name="parameters")
     replay_event = models.ForeignKey('ReplayEvent', blank=True, null=True, default=None)
 
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -84,7 +86,7 @@ class Parameter(models.Model):
                             self.value, self.data_type, self.event, self.replay_event)
 
 
-#FIXME: Need to define what the replay will store and where it should store it?
+# FIXME: Need to define what the replay will store and where it should store it?
 #  In duplicated Events/Parameters, or similar objects with more details?
 class Replay(models.Model):
     script = models.ForeignKey('Script',

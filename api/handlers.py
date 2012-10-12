@@ -1,4 +1,5 @@
 from piston.handler import BaseHandler
+from piston.utils import rc, throttle
 
 from webscript_backend import models
 
@@ -11,7 +12,7 @@ class ScriptHandler(BaseHandler):
               'creation_date',
               'id',
               ('user', ('username', 'firstname', 'lastname', 'id')),
-              ('event', ('event_type', 'modification_date')),
+              ('events', ('event_type', 'modification_date')),
                )
     model = models.Script
 
@@ -40,6 +41,16 @@ class ScriptHandler(BaseHandler):
 
 class EventHandler(BaseHandler):
     allowed_methods = ('GET',)  # 'PUT')
+    fields = ('event_type',
+               'execution_order',
+               'version',
+               'modification_date',
+               'creation_date',
+               'id',
+               'dom_pre_event_state',
+               'dom_post_event_state',
+               ('parameters', ('name',)),
+               )
     exclude = ('script',)
     model = models.Event
 
@@ -53,3 +64,16 @@ class EventHandler(BaseHandler):
         else:
             return base.all()
 
+
+class ParameterHandler(BaseHandler):
+    allowed_methods = ('GET',)  # 'PUT')
+    exclude = ('event',)
+    model = models.Parameter
+
+    def read(self, request, event_id=None):
+        base = models.Parameter.objects
+
+        if event_id:
+            return base.filter(event=int(event_id))
+        else:
+            return base.all()
