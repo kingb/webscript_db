@@ -1,9 +1,18 @@
+#!/usr/bin/env python
+"""
+To use this script you need to install selenium:
+ * pip install selenium
+ 
+And put the chromedriver on your PATH:
+  http://code.google.com/p/selenium/wiki/ChromeDriver
+"""
 from selenium import webdriver
 
 
-def main(url):
+def main(url, webscript_ext):
+
     co = webdriver.ChromeOptions()
-    co.add_extension('/Users/king/proj/webscript.crx')
+    co.add_extension(webscript_ext)
     driver = webdriver.Chrome(chrome_options=co)
 
     # Grab replay window
@@ -38,4 +47,4 @@ def main(url):
     stop.click()
 
 if __name__ == '__main__':
-    main('http://www.google.com/')
+    main('http://www.google.com/', '/User/king/proj/webscript.crx')
