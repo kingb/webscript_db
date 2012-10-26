@@ -5,8 +5,14 @@ To use this script you need to install selenium:
  
 And put the chromedriver on your PATH:
   http://code.google.com/p/selenium/wiki/ChromeDriver
+  
+Extension: 
+    Make sure to update the path to the webscript extension.
+    It needs to be packaged extension.
 """
 from selenium import webdriver
+
+PATH_TO_EXT = '/Users/king/proj/webscript.crx'
 
 
 def main(url, webscript_ext):
@@ -47,4 +53,4 @@ def main(url, webscript_ext):
     stop.click()
 
 if __name__ == '__main__':
-    main('http://www.google.com/', '/User/king/proj/webscript.crx')
+    main('http://www.google.com/', PATH_TO_EXT)
