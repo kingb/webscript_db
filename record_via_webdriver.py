@@ -44,7 +44,7 @@ def main(url, webscript_ext):
     driver.get(url)
 
     search = driver.find_element_by_name("q")
-    search.send_keys("This is a test of selenium")
+    search.send_keys("Wow")
     search.submit()
 
     ###########################################
